@@ -1,0 +1,262 @@
+html, body{
+	min-height: 100%;
+	font-family: Helvetica, Verdana, sans-serif;
+	margin: 0;
+}
+
+a:link{
+	text-decoration: none;
+	color: #408BD8;
+}
+
+a:hover{
+	text-decoration: underline;
+}
+
+/*HEADER*/
+
+header{
+	width: 100%;
+	margin-bottom: 30px;
+	background-color: #F5F5F5;
+	height: 50px;
+	border-bottom: 1px solid #E5E5E5;
+	position: relative;	
+}
+
+#headerContainer{
+	position: relative;
+	padding-top: 6px;
+	margin: auto;
+	max-width: 1000px;
+	height: 50px;
+	top: 50%;
+	transform: translate(0%,-50%);
+}
+
+#pageLogo{
+	height: 32px;
+	display: inline;
+	position: absolute;
+	top: 13px;
+	left: 0;
+}
+
+form{
+	margin-left: 23px;
+	position: absolute;
+	left: 3%;
+	top: 9px;
+}
+
+input{
+	width: 300px;
+	height: 34px;
+	border-radius: 8px;
+	border: 1px solid #E5E5E5;
+	margin: 0;
+	display: inline-block;
+	padding-left: 8px;
+}
+
+input:focus{
+	border:1px solid #408BD8;
+	outline: none;
+}
+
+/*PLACEHOLDER TEXT*/
+::-webkit-input-placeholder {
+   font-size: 12px;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    font-size: 12px;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+    font-size: 12px;
+}
+
+:-ms-input-placeholder {  
+  font-size: 12px;
+}
+
+/*TWO-COLUMN FORMAT*/
+
+#container{
+	max-width: 950px;
+	min-width: 600px;
+	margin: auto;
+	display: flex;
+	border-bottom: 1px solid #EEEEEE;
+	padding-bottom: 30px;
+	margin-bottom: 80px;
+}
+
+#column-one{
+	flex: 2;
+	margin-right: 20px;	
+}
+
+#column-two{
+	flex: 5;		
+}
+
+/*COLUMN 1: USER INFO*/
+
+#avatar{
+	width: 231px;
+	border-radius: 8px;
+}
+
+#userName p{
+	color: #666666;
+	font-size: 20px;
+	font-weight: lighter;
+	margin-top: 5px;
+}
+
+#userName p:first-child{
+	font-weight: bold;
+	color: black;
+	font-size: 30px;
+	margin-bottom: 0;
+}
+
+#userName p:nth-child(2){
+	margin-top: 0;
+}
+
+#contact-info{
+	font-size: 14px;
+	border-top: 1px solid #EEEEEE;
+	border-bottom: 1px solid #EEEEEE;
+}
+
+.material-icons{
+	font-size: 14px;
+	color: lightgray;
+}
+
+a:hover .material-icons{
+	color: #408BD8;
+}
+
+.followerData{
+	display: inline-block;
+	width: 30%;
+	text-align: center;
+	color: #408BD8;
+	font-size: 30px;
+	font-weight: bold;
+	border-bottom: 1px solid #EEEEEE;
+	padding-bottom: 15px;
+	padding-top: 15px;
+	margin: 0;
+}
+
+.followerData span{
+	color: #666666;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.followerData a:hover{
+	text-decoration: none;
+}
+
+.followerData a:hover span{
+	color: #408BD8;
+}
+
+/*COLUMN 2: REPO LIST*/
+
+h2{
+	font-size: 18px;
+}
+
+h2 i{
+	size: 14px;
+}
+
+ul{
+	list-style-type: none;
+	margin-top: 0;
+	padding-left: 0;
+}
+
+li{
+	border-bottom: 1px solid #EEEEEE;
+	padding-top: 25px;
+	padding-bottom: 15px;
+	color: #4078C0;
+	font-size: 22px;
+	font-weight: bold;
+}
+
+li:first-child{
+	border-top: 1px solid #EEEEEE;
+}
+
+.repoNameContainer{
+	display: inline-block;
+	max-width: 400px;
+	/* padding: 0; */
+}
+
+.repoDetailContainer{
+	max-width: 200px;
+	margin: 0;
+	/* padding: 0; */
+	display: inline;
+	float: right;
+	padding-top: 12px;
+}
+
+.repoDetailContainer p{
+	max-width: 200px;
+	text-align: right;
+	float: right;
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+.repoDetailContainer p a:hover{
+	color: #408BD8;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+
+.repoTimeStamp{
+	color: #666666;
+	font-size: 14px;
+	font-weight: normal;
+}
+
+.repoDetails{
+	color: #666666;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+
+/*_____________________________________________*/
+/*Adjustment for small screen*/
+
+@media screen and (max-width: 750px){
+
+
+	#column-one{
+		display: block;
+	}
+	
+	#column-two{
+		display: block;
+	}
+
+	li{
+		display: block;
+	}
+}
