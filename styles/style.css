@@ -1,7 +1,7 @@
 html, body{
 	min-height: 100%;
 	font-family: Helvetica, Verdana, sans-serif;
-	margin: 0;
+	margin: 0;	
 }
 
 a:link{
@@ -65,21 +65,22 @@ input:focus{
 }
 
 /*PLACEHOLDER TEXT*/
-::-webkit-input-placeholder {
-   font-size: 12px;
-}
 
-:-moz-placeholder { /* Firefox 18- */
-    font-size: 12px;
-}
+	::-webkit-input-placeholder {
+	   font-size: 12px;
+	}
 
-::-moz-placeholder {  /* Firefox 19+ */
-    font-size: 12px;
-}
+	:-moz-placeholder { /* Firefox 18- */
+	    font-size: 12px;
+	}
 
-:-ms-input-placeholder {  
-  font-size: 12px;
-}
+	::-moz-placeholder {  /* Firefox 19+ */
+	    font-size: 12px;
+	}
+
+	:-ms-input-placeholder {  
+	  font-size: 12px;
+	}
 
 /*TWO-COLUMN FORMAT*/
 
@@ -246,7 +247,10 @@ li:first-child{
 /*Adjustment for small screen*/
 
 @media screen and (max-width: 750px){
-
+	
+	#container{
+		display: block;
+	}
 
 	#column-one{
 		display: block;

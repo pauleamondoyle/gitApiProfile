@@ -1,8 +1,8 @@
 window.onload = function(){
 
 	
-	var repoUrlRoot = 'https://api.github.com/users/pauleamondoyle/repos?token=13a53698751202273971595ed307c8f8cb58c658'
-	var userUrlRoot = 'https://api.github.com/users/pauleamondoyle?token=13a53698751202273971595ed307c8f8cb58c658'
+	var repoUrlRoot = 'https://api.github.com/users/pauleamondoyle/repos?token=448228121277af87e83575672d567de17a56fddb'
+	var userUrlRoot = 'https://api.github.com/users/pauleamondoyle?token=448228121277af87e83575672d567de17a56fddb'
 //  ________________________________________________________________
 // Relative time function from http://stackoverflow.com/questions/7516548/how-to-convert-date-and-time-to-timeago-format-in-jquery
 
@@ -35,7 +35,41 @@ window.onload = function(){
 	    }
 	    return r;
 	};
-//  ________________________________________________________________
+
+// ________________________________________________________________
+// FORMAT DISPLAY DATE TO MM DD, YEAR FORMAT
+var joinedYear = "",
+	joinedDate = "",
+	joinedMonth = ""
+var monthObj = {01: "January", 02: "February", 03: "March", 04: "April", 05: "May", 06: "June", 07: "July", 08: "August", 09: "September", 10: "October", 11: "November", 12: "December"}
+console.log(monthObj[08])
+
+var formatYear = function(gitJoinedDate){
+	for(var i=0; i<4; i++){
+		joinedYear += gitJoinedDate[i]		
+	}
+	return joinedYear;
+}
+
+var formatMonth = function(gitJoinedDate){
+	for(var i=5; i<7; i++){
+		joinedMonth += gitJoinedDate[i]
+	};
+	// console.log(joinedMonth)
+	console.log(monthObj[joinedMonth])
+	return monthObj[joinedMonth]
+}
+
+var formatDate = function(gitJoinedDate){
+	for(var i=8; i<10; i++){
+		joinedDate += gitJoinedDate[i]
+	}
+	if(joinedDate.length===1) return "0" + joinedDate;
+	else return joinedDate;
+}
+
+// ________________________________________________________________
+// AJAX SUCCESS FUNCTIONS
 
 	var addRepos = function(repoArray){
 		var listElement = $("#repo-list")[0];
@@ -54,7 +88,8 @@ window.onload = function(){
 			
 		avatarImg.src = userObj.avatar_url;
 		userName.innerHTML = "<p>" + userObj.name + "</p> <p>" + userObj.login + "</p>" 
-		contactInfoBox.innerHTML = "<p> <i class='material-icons'> location_on </i>" + "&nbsp;"+ " " +  userObj.location + "</p> <p> <i class='material-icons'> email </i>" + " " + "&nbsp;" + "<a href='mailto:'" + userObj.email + ">" + userObj.email + "</a> </p><p><i class='material-icons'> av_timer </i> Joined on " + createdFullDate + "</p>"
+		contactInfoBox.innerHTML = "<p> <i class='material-icons'> location_on </i>" + "&nbsp;"+ " " +  userObj.location + "</p> <p> <i class='material-icons'> email </i>" + " " + "&nbsp;" + "<a href='mailto:'" + userObj.email + ">" + userObj.email + "</a> </p><p><i class='material-icons'> av_timer </i> Joined on " + formatMonth(createdFullDate) + " " + formatDate(createdFullDate) + ", " + formatYear(createdFullDate) + "</p>"
+			console.log(formatMonth(createdFullDate))
 		followerBox.innerHTML = "<p class='followerData'> <a href='https://github.com/pauleamondoyle/followers'>" + userObj.followers + "<br><span> Followers</span> </p> </a> <p class='followerData'> <a href='https://github.com/stars'>" + userObj.public_gists + "<br> <span> Starred </span> </p> </a> <p class='followerData'> <a href='https://github.com/pauleamondoyle/following'>" + userObj.following + "<br> <span> Following </span> </p> </a>"
 	}
 
@@ -69,6 +104,9 @@ window.onload = function(){
 		console.log(responseData)
 		addUserInfo(responseData)
 	}
+
+// ________________________________________________________________
+// AJAX FUNCTIONS & LOAD SITE
 
 	var repoAjaxParams = {
 		url: repoUrlRoot,
