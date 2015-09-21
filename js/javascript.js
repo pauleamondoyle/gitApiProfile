@@ -1,8 +1,9 @@
 window.onload = function(){
 
 	
-	var repoUrlRoot = 'https://api.github.com/users/pauleamondoyle/repos?token=448228121277af87e83575672d567de17a56fddb'
-	var userUrlRoot = 'https://api.github.com/users/pauleamondoyle?token=448228121277af87e83575672d567de17a56fddb'
+	var repoUrlRoot = 'https://api.github.com/users/pauleamondoyle/repos?token=e34775cfdc0227206b523042529cd594259674ec'
+	var userUrlRoot = 'https://api.github.com/users/pauleamondoyle?token=e34775cfdc0227206b523042529cd594259674ec'
+	
 //  ________________________________________________________________
 // Relative time function from http://stackoverflow.com/questions/7516548/how-to-convert-date-and-time-to-timeago-format-in-jquery
 
@@ -37,35 +38,28 @@ window.onload = function(){
 	};
 
 // ________________________________________________________________
-// FORMAT DISPLAY DATE TO MM DD, YEAR FORMAT
+// FORMAT DISPLAY DATE TO "MONTH" DD, YEAR FORMAT
+
 var joinedYear = "",
 	joinedDate = "",
 	joinedMonth = ""
 var monthObj = {01: "January", 02: "February", 03: "March", 04: "April", 05: "May", 06: "June", 07: "July", 08: "August", 09: "September", 10: "October", 11: "November", 12: "December"}
-console.log(monthObj[08])
+
 
 var formatYear = function(gitJoinedDate){
-	for(var i=0; i<4; i++){
-		joinedYear += gitJoinedDate[i]		
-	}
+	joinedYear = gitJoinedDate.slice(0,4)
 	return joinedYear;
 }
 
 var formatMonth = function(gitJoinedDate){
-	for(var i=5; i<7; i++){
-		joinedMonth += gitJoinedDate[i]
-	};
-	// console.log(joinedMonth)
-	console.log(monthObj[joinedMonth])
-	return monthObj[joinedMonth]
+	var joinedMonthKey = gitJoinedDate.slice(5,7)
+	joinedMonth = monthObj[joinedMonthKey]
+	return joinedMonth
 }
 
 var formatDate = function(gitJoinedDate){
-	for(var i=8; i<10; i++){
-		joinedDate += gitJoinedDate[i]
-	}
-	if(joinedDate.length===1) return "0" + joinedDate;
-	else return joinedDate;
+	joinedDate = gitJoinedDate.slice(8,10)
+	return joinedDate
 }
 
 // ________________________________________________________________
@@ -73,9 +67,9 @@ var formatDate = function(gitJoinedDate){
 
 	var addRepos = function(repoArray){
 		var listElement = $("#repo-list")[0];
+		listElement.innerHTML = ""
 		repoArray.forEach(function(repoObject){
-			listElement.innerHTML += 
-				"<li><div class='repoNameContainer'> <a href=" + repoObject.svn_url +">" + repoObject.name + "</a> <span class='repoTimeStamp'> <p>" + relativeTime(repoObject.updated_at) + "</p> </span> </div>" + "<div class='repoDetailContainer'> <p> <span class='repoDetails'>" + repoObject.language + " " + "&nbsp;" + "<a> <i class='material-icons'> grade </i> &nbsp;" + repoObject.stargazers_count + "&nbsp;" + "</a>" + " " + "<a><i class='material-icons'> call_split </i> &nbsp;" + repoObject.forks + "</a></span> </p> </div> </li>"
+			listElement.innerHTML += "<li> <div class='repoNameContainer'> <a href=" + repoObject.svn_url +">" + repoObject.name + "</a> <span class='repoTimeStamp'> <p>" + relativeTime(repoObject.updated_at) + "</p> </span> </div>" + "<div class='repoDetailContainer'> <p> <span class='repoDetails'>" + repoObject.language + " " + "&nbsp;" + "<a> <i class='material-icons'> grade </i> &nbsp;" + repoObject.stargazers_count + "&nbsp;" + "</a>" + " " + "<a><i class='material-icons'> call_split </i> &nbsp;" + repoObject.forks + "</a></span> </p> </div> </li>"
 		})
 	}
 
@@ -85,11 +79,14 @@ var formatDate = function(gitJoinedDate){
 			contactInfoBox = $("#contact-info")[0],
 			followerBox = $("#followers")[0],
 			createdFullDate = userObj.created_at
-			
+		userName.innerHTML = ""
+		contactInfoBox.innerHTML = ""
+		followerBox.innerHTML = ""
+		avatarImg.innerHTML = ""	
 		avatarImg.src = userObj.avatar_url;
 		userName.innerHTML = "<p>" + userObj.name + "</p> <p>" + userObj.login + "</p>" 
 		contactInfoBox.innerHTML = "<p> <i class='material-icons'> location_on </i>" + "&nbsp;"+ " " +  userObj.location + "</p> <p> <i class='material-icons'> email </i>" + " " + "&nbsp;" + "<a href='mailto:'" + userObj.email + ">" + userObj.email + "</a> </p><p><i class='material-icons'> av_timer </i> Joined on " + formatMonth(createdFullDate) + " " + formatDate(createdFullDate) + ", " + formatYear(createdFullDate) + "</p>"
-			console.log(formatMonth(createdFullDate))
+			
 		followerBox.innerHTML = "<p class='followerData'> <a href='https://github.com/pauleamondoyle/followers'>" + userObj.followers + "<br><span> Followers</span> </p> </a> <p class='followerData'> <a href='https://github.com/stars'>" + userObj.public_gists + "<br> <span> Starred </span> </p> </a> <p class='followerData'> <a href='https://github.com/pauleamondoyle/following'>" + userObj.following + "<br> <span> Following </span> </p> </a>"
 	}
 
@@ -104,6 +101,7 @@ var formatDate = function(gitJoinedDate){
 		console.log(responseData)
 		addUserInfo(responseData)
 	}
+
 
 // ________________________________________________________________
 // AJAX FUNCTIONS & LOAD SITE
@@ -123,8 +121,60 @@ var formatDate = function(gitJoinedDate){
 		$.ajax(repoAjaxParams)
 	}
 
+
+// ________________________________________________________________
+// SEARCH FUNCTION & ROUTING
+
+	var getSearchInput = function(event){
+		if (event.keyCode === 13){
+			var inputElement = event.srcElement
+			var userValue = inputElement.value
+			inputElement.value = ""
+			location.hash = userValue
+		}
+	}
+	
+	var searchGit = function(){
+		var userValue = location.hash.slice(1)
+		var searchUrlRoot = "https://api.github.com/users/"
+		var apiKey = "token=e34775cfdc0227206b523042529cd594259674ec"
+
+		var repoSearchAjaxParams = {
+			url: searchUrlRoot + userValue + "/repos?" + apiKey,
+			success: repoSuccessFunction
+		}
+
+		var userSearchAjaxParams = {
+			url: searchUrlRoot + userValue + "?" + apiKey,
+			success: userSuccessFunction
+		}
+			$.ajax(userSearchAjaxParams)
+			$.ajax(repoSearchAjaxParams)	
+	}
+
+	window.onhashchange = function(){
+		var userValue = location.hash.slice(1)
+		searchGit(userValue)
+	}
+
+	var performSearch = function(){
+		var inputElement = $("input")[0]
+		inputElement.onkeypress = getSearchInput
+		var userValue = location.hash
+		searchGit(userValue)
+	}
+
+
+// ________________________________________________________________
+// GO!
+
 	getGit();	
 
 	console.log('ajaxCalled')
 
+	performSearch()
+
 }
+
+//Routing: 
+// event listeners: enter keystroke -> location.hash=input.value.  Second event listener window.onhashchange (but window.ADDhashchange is better?). So the input.value becomes  the onhash, which changes the url. But then you need to add the onhash listener so that when the hash changes in the url, the page changes. Make api url variable, a username variable (I guess that's onhash?), and the api key to use for ajax.
